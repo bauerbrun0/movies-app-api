@@ -1,0 +1,126 @@
+## Success
+
+### without body
+
+http://localhost:3001/api/movies/trending
+
+### field "page"
+
+http://localhost:3001/api/movies/trending
+Content-Type: application/json
+
+{
+    "page": 1
+}
+
+###
+
+http://localhost:3001/api/movies/trending
+Content-Type: application/json
+
+{
+    "page": 2
+}
+
+### field "language"
+
+http://localhost:3001/api/movies/trending
+Content-Type: application/json
+
+{
+    "language": "hu-HU"
+}
+
+####
+
+http://localhost:3001/api/movies/trending
+Content-Type: application/json
+
+{
+    "language": "en-US"
+}
+
+### field "timeWindow"
+
+http://localhost:3001/api/movies/trending
+Content-Type: application/json
+
+{
+    "timeWindow": "day"
+}
+
+####
+
+http://localhost:3001/api/movies/trending
+Content-Type: application/json
+
+{
+    "timeWindow": "week"
+}
+
+### all 3 fields
+
+http://localhost:3001/api/movies/trending
+Content-Type: application/json
+
+{
+    "page": 2,
+    "timeWindow": "week",
+    "language": "hu-HU"
+}
+
+## Error
+
+### Incorrect "page"
+
+http://localhost:3001/api/movies/trending
+Content-Type: application/json
+
+{
+    "page": "first"
+}
+
+####
+
+http://localhost:3001/api/movies/trending
+Content-Type: application/json
+
+{
+    "page": 1.5
+}
+
+### Incorrect "timeWindow"
+
+http://localhost:3001/api/movies/trending
+Content-Type: application/json
+
+{
+    "timeWindow": 400
+}
+
+####
+
+http://localhost:3001/api/movies/trending
+Content-Type: application/json
+
+{
+    "timeWindow": "century"
+}
+
+### Incorrect "language"
+
+http://localhost:3001/api/movies/trending
+Content-Type: application/json
+
+{
+    "language": 400
+}
+
+####
+
+http://localhost:3001/api/movies/trending
+Content-Type: application/json
+
+{
+    "language": "aa-AA"
+}
