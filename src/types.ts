@@ -23,15 +23,15 @@ export interface BaseMediaItem {
     releaseDate: string;
     overview: string;
     voteAverage: number | null;
-    popularity: number;
+    popularity: number | null;
     posterPath: string;
     backdropPath: string | null;
     mediaType: MediaType;
 }
 
 export interface MediaItem extends BaseMediaItem {
-    logo: string | null;
-    tagLine: string | null;
+    logoPath: string | null;
+    tagline: string | null;
 }
 
 export enum Language {
@@ -52,4 +52,9 @@ export enum MediaType {
 export enum ErrorStatus {
     BadRequest = 400,
     InternalServerError = 500,
+}
+
+export interface Logo {
+    logoPath: string;
+    language: string | null;
 }

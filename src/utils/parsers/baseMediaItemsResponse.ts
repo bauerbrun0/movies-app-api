@@ -56,7 +56,7 @@ const parseMediaItem = (mediaItem: unknown, defaultMediaType: MediaType | null):
         releaseDate: parseStringField("releaseDate", releaseDate, defaultErrorStatus),
         overview: parseStringField("overview", overview, defaultErrorStatus),
         voteAverage: voteAverage ? parseNumberField("voteAverage", voteAverage, defaultErrorStatus) : null,
-        popularity: parseNumberField("popularity", popularity, defaultErrorStatus),
+        popularity: popularity ? parseNumberField("popularity", popularity, defaultErrorStatus) : null,
         posterPath: parseStringField("posterPath", posterPath, defaultErrorStatus),
         backdropPath: backdropPath ? parseStringField("backdropPath", backdropPath, defaultErrorStatus) : null
     };

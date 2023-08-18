@@ -1,11 +1,11 @@
 import axios from 'axios';
 
 import tmdbConfig from '../config/tmdb.config';
-import { BaseMediaItemsResponse, MediaItemsRequest } from '../types';
+import { MediaItemsRequest, MediaItemsResponse } from '../types';
 import { parseBaseMediaItemsResponse } from '../utils/parsers/baseMediaItemsResponse';
+import { completeMediaItems } from './mediaItemService';
 
-// Will return Promise<MediaItemsResponse> eventually.
-const getTrendingMovies = async (mediaItemsRequest: MediaItemsRequest): Promise<BaseMediaItemsResponse> => {
+const getTrendingMovies = async (mediaItemsRequest: MediaItemsRequest): Promise<MediaItemsResponse> => {
     const { page, language, timeWindow } = mediaItemsRequest;
     const res = await axios.get(
         `${tmdbConfig.baseURL}/trending/movie/${timeWindow}?page=${page}&language=${language}`,
@@ -13,7 +13,12 @@ const getTrendingMovies = async (mediaItemsRequest: MediaItemsRequest): Promise<
     );
 
     const baseMediaItemsResponse = parseBaseMediaItemsResponse(res.data);
-    return baseMediaItemsResponse;
+    const mediaItems = await completeMediaItems(baseMediaItemsResponse.mediaItems, language);
+
+    return {
+        ...baseMediaItemsResponse,
+        mediaItems
+    };
 };
 
 export default {
