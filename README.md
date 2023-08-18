@@ -54,5 +54,3 @@ We've provided example API requests in the `requests/` directory. These examples
 4. Utilize the "Send Request" option above each request to observe the API's responses.
 
 These example requests demonstrate how to interact with the Movies App API to fetch movie and TV show data. They align with the [Movies App](https://github.com/bauerbrun0/movies-app) frontend's requirements, enabling seamless integration between the frontend and backend.
-
-Remember to adapt this README to your specific project details and replace placeholders with actual values.
