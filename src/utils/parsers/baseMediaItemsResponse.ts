@@ -1,3 +1,4 @@
+import tmdbConfig from '../../config/tmdb.config';
 import { BaseMediaItem, BaseMediaItemsResponse, ErrorStatus, MediaType } from '../../types';
 import { ParsingError } from '../errors';
 import { isArray } from '../typeguards';
@@ -5,7 +6,7 @@ import { parseIntegerField, parseMediaType, parseNumberField, parseStringField }
 
 const defaultErrorStatus = ErrorStatus.InternalServerError;
 
-export const parseBaseMediaItemsResponse = (body: unknown, defaultMediaType: MediaType | null = null): BaseMediaItemsResponse => {
+export const parseBaseMediaItemsResponse = (body: unknown, defaultMediaType: MediaType | null): BaseMediaItemsResponse => {
     if (!body || typeof body !== "object") {
         throw new ParsingError("Missing or incorrect BaseMediaItemsResponse", defaultErrorStatus);
     }
@@ -27,7 +28,9 @@ export const parseBaseMediaItemsResponse = (body: unknown, defaultMediaType: Med
     const mediaItems = parseMediaItems(body.results, defaultMediaType);
 
     return {
-        page, totalPages, mediaItems
+        page,
+        mediaItems,
+        totalPages: Math.min(totalPages, tmdbConfig.maxPages)
     };
 };
 

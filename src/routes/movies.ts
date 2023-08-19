@@ -1,5 +1,6 @@
 import express, { Request, Response } from 'express';
 
+import tmdbConfig from '../config/tmdb.config';
 import movieService from '../services/movieService';
 import { ErrorStatus } from '../types';
 import routeBuilder from '../utils/builders/routeBuilder';
@@ -23,7 +24,7 @@ router.get("/genres", async (req: Request, res: Response): Promise<Response> => 
 });
 
 router.get("/genres/:id", async (req: Request, res: Response): Promise<Response> => {
-    const mediaItemsRequest = parseMediaItemsRequest(req.body, 500);
+    const mediaItemsRequest = parseMediaItemsRequest(req.body, tmdbConfig.maxPages);
     const genreId = parseIntegerRequestParam("id", req.params.id, ErrorStatus.BadRequest);
     const movies = await movieService.getMoviesByGenreId(genreId, mediaItemsRequest);
     

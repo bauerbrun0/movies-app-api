@@ -59,7 +59,7 @@ export const parseMediaType = (mediaType: unknown, defaultMediaType: MediaType |
 export const parseLanguageField = (language: unknown, errorStatus: ErrorStatus): Language => {
     const lang = parseStringField("language", language, errorStatus);
     if (!isLanguage(lang)) {
-        throw new ParsingError("Field 'timeWindow' is not a valid Language", errorStatus);
+        throw new ParsingError("Field 'language' is not a valid Language", errorStatus);
     }
 
     return lang;

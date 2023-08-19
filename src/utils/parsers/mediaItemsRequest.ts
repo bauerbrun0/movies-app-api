@@ -5,7 +5,7 @@ import { parseIntegerField, parseLanguageField, parseStringField } from './commo
 
 const defaultErrorStatus = ErrorStatus.BadRequest;
 
-export const parseMediaItemsRequest = (body: unknown, pageUpperBound: number): MediaItemsRequest => {
+export const parseMediaItemsRequest = (body: unknown, maxPage: number): MediaItemsRequest => {
     const defaultRequest = {
         page: 1,
         timeWindow: TimeWindow.Day,
@@ -17,7 +17,7 @@ export const parseMediaItemsRequest = (body: unknown, pageUpperBound: number): M
     }
 
     return {
-        page: "page" in body ? parsePage(body.page, pageUpperBound) : defaultRequest.page,
+        page: "page" in body ? parsePage(body.page, maxPage) : defaultRequest.page,
         timeWindow: "timeWindow" in body ? parseTimeWindow(body.timeWindow) : defaultRequest.timeWindow,
         language: "language" in body ? parseLanguageField(body.language, defaultErrorStatus) : defaultRequest.language
     };
