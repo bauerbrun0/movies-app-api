@@ -1,6 +1,6 @@
-import { ErrorStatus, MediaType } from '../../types';
+import { ErrorStatus, Language, MediaType } from '../../types';
 import { ParsingError } from '../errors';
-import { isMediaType, isNumber, isString } from '../typeguards';
+import { isLanguage, isMediaType, isNumber, isString } from '../typeguards';
 
 export const parseNumberField = (fieldName: string, value: unknown, errorStatus: ErrorStatus): number => {
     if (!value) {
@@ -54,4 +54,13 @@ export const parseMediaType = (mediaType: unknown, defaultMediaType: MediaType |
     }
 
     return mediaType;
+};
+
+export const parseLanguageField = (language: unknown, errorStatus: ErrorStatus): Language => {
+    const lang = parseStringField("language", language, errorStatus);
+    if (!isLanguage(lang)) {
+        throw new ParsingError("Field 'timeWindow' is not a valid Language", errorStatus);
+    }
+
+    return lang;
 };

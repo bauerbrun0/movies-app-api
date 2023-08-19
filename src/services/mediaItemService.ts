@@ -2,8 +2,9 @@ import axios from 'axios';
 import localeCode from 'locale-code';
 
 import tmdbConfig from '../config/tmdb.config';
-import { BaseMediaItem, Language, MediaItem, MediaItemsResponse, MediaType } from '../types';
+import { BaseMediaItem, Genre, Language, MediaItem, MediaItemsResponse, MediaType } from '../types';
 import { parseBaseMediaItemsResponse } from '../utils/parsers/baseMediaItemsResponse';
+import { parseGenresResponse } from '../utils/parsers/genresResponse';
 import { parseLogosResponse } from '../utils/parsers/logosResponse';
 import { parseTaglineResponse } from '../utils/parsers/taglineResponse';
 
@@ -75,6 +76,17 @@ const getTagline = async (mediaItemId: number, mediaType: MediaType, language: L
     return tagline;
 };
 
+const getGenres = async (mediaType: MediaType, language: Language): Promise<Genre[]> => {
+    const res = await axios(
+        `${tmdbConfig.baseURL}/genre/${mediaType}/list?language=${language}`,
+        tmdbConfig.requestConfig
+    );
+    
+    const genres = parseGenresResponse(res.data);
+
+    return genres;
+};
+
 export default {
-    getMediaItemsResponse
+    getMediaItemsResponse, getGenres
 };

@@ -1,0 +1,50 @@
+### Success
+
+
+#### Without body
+http://localhost:3001/api/movies/genres
+
+#### With language
+http://localhost:3001/api/movies/genres
+Content-Type: application/json
+
+{
+    "language": "hu-HU"
+}
+
+#### With language
+http://localhost:3001/api/movies/genres
+Content-Type: application/json
+
+{
+    "language": "en-US"
+}
+
+#### With language
+http://localhost:3001/api/movies/genres
+Content-Type: application/json
+
+{
+    "language": null
+}
+
+
+### Error
+
+
+#### With incorrect language
+http://localhost:3001/api/movies/genres
+Content-Type: application/json
+
+{
+    "language": "xx-XX"
+}
+
+
+#### With incorrect language
+http://localhost:3001/api/movies/genres
+Content-Type: application/json
+
+{
+    "language": 12
+}

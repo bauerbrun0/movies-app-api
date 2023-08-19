@@ -58,3 +58,8 @@ export interface Logo {
     logoPath: string;
     language: string | null;
 }
+
+export interface Genre {
+    id: number;
+    name: string;
+}

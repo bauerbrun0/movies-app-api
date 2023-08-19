@@ -1,5 +1,5 @@
 import tmdbConfig from '../config/tmdb.config';
-import { MediaItemsRequest, MediaItemsResponse } from '../types';
+import { Genre, Language, MediaItemsRequest, MediaItemsResponse, MediaType } from '../types';
 import mediaItemService from './mediaItemService';
 
 const getTrendingMovies = async (mediaItemsRequest: MediaItemsRequest): Promise<MediaItemsResponse> => {
@@ -37,6 +37,10 @@ const getUpcomingMovies = async (mediaItemsRequest: MediaItemsRequest): Promise<
     return await mediaItemService.getMediaItemsResponse(url, language);  
 };
 
+const getGenres = async (language: Language): Promise<Genre[]> => {
+    return await mediaItemService.getGenres(MediaType.Movie, language);
+};
+
 export default {
-    getTrendingMovies, getPopularMovies, getTopRatedMovies, getNowPlayingMovies, getUpcomingMovies
+    getTrendingMovies, getPopularMovies, getTopRatedMovies, getNowPlayingMovies, getUpcomingMovies, getGenres
 };
