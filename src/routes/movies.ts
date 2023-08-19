@@ -1,15 +1,14 @@
-import express, { Request, Response } from 'express';
+import express from 'express';
 
 import movieService from '../services/movieService';
-import { parseMediaItemsRequest } from '../utils/parsers/mediaItemsRequest';
+import routeBuilder from '../utils/builders/routeBuilder';
 
 const router = express.Router();
 
-router.get("/trending", async (req: Request, res: Response): Promise<Response> => {
-    const mediaItemsRequest = parseMediaItemsRequest(req.body, 500);
-    const trendingMovies = await movieService.getTrendingMovies(mediaItemsRequest);
-    return res.json(trendingMovies);
-});
-
+routeBuilder.addMediaItemsRoute(router, "/trending", movieService.getTrendingMovies);
+routeBuilder.addMediaItemsRoute(router, "/popular", movieService.getPopularMovies);
+routeBuilder.addMediaItemsRoute(router, "/top-rated", movieService.getTopRatedMovies);
+routeBuilder.addMediaItemsRoute(router, "/now-playing", movieService.getNowPlayingMovies);
+routeBuilder.addMediaItemsRoute(router, "/upcoming", movieService.getUpcomingMovies);
 
 export default router;

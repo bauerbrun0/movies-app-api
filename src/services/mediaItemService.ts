@@ -2,11 +2,27 @@ import axios from 'axios';
 import localeCode from 'locale-code';
 
 import tmdbConfig from '../config/tmdb.config';
-import { BaseMediaItem, Language, MediaItem, MediaType } from '../types';
+import { BaseMediaItem, Language, MediaItem, MediaItemsResponse, MediaType } from '../types';
+import { parseBaseMediaItemsResponse } from '../utils/parsers/baseMediaItemsResponse';
 import { parseLogosResponse } from '../utils/parsers/logosResponse';
 import { parseTaglineResponse } from '../utils/parsers/taglineResponse';
 
-export const completeMediaItems = async (baseMediaItems: BaseMediaItem[], language: Language): Promise<MediaItem[]> => {
+const getMediaItemsResponse = async (url: string, language: Language): Promise<MediaItemsResponse> => {
+    const res = await axios.get(
+        url + `&language=${language}`,
+        tmdbConfig.requestConfig
+    );
+
+    const baseMediaItemsResponse = parseBaseMediaItemsResponse(res.data);
+    const mediaItems = await completeMediaItems(baseMediaItemsResponse.mediaItems, language);
+
+    return {
+        ...baseMediaItemsResponse,
+        mediaItems
+    };
+};
+
+const completeMediaItems = async (baseMediaItems: BaseMediaItem[], language: Language): Promise<MediaItem[]> => {
     const mediaItemPromises = baseMediaItems.map(baseMediaItem => completeMediaItem(baseMediaItem, language));
     return await Promise.all(mediaItemPromises);
 };
@@ -60,5 +76,5 @@ const getTagline = async (mediaItemId: number, mediaType: MediaType, language: L
 };
 
 export default {
-    completeMediaItems
+    getMediaItemsResponse
 };

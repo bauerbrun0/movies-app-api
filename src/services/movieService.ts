@@ -1,26 +1,42 @@
-import axios from 'axios';
-
 import tmdbConfig from '../config/tmdb.config';
 import { MediaItemsRequest, MediaItemsResponse } from '../types';
-import { parseBaseMediaItemsResponse } from '../utils/parsers/baseMediaItemsResponse';
-import { completeMediaItems } from './mediaItemService';
+import mediaItemService from './mediaItemService';
 
 const getTrendingMovies = async (mediaItemsRequest: MediaItemsRequest): Promise<MediaItemsResponse> => {
     const { page, language, timeWindow } = mediaItemsRequest;
-    const res = await axios.get(
-        `${tmdbConfig.baseURL}/trending/movie/${timeWindow}?page=${page}&language=${language}`,
-        tmdbConfig.requestConfig
-    );
+    const url = `${tmdbConfig.baseURL}/trending/movie/${timeWindow}?page=${page}`;
 
-    const baseMediaItemsResponse = parseBaseMediaItemsResponse(res.data);
-    const mediaItems = await completeMediaItems(baseMediaItemsResponse.mediaItems, language);
+    return await mediaItemService.getMediaItemsResponse(url, language);
+};
 
-    return {
-        ...baseMediaItemsResponse,
-        mediaItems
-    };
+const getPopularMovies = async (mediaItemsRequest: MediaItemsRequest): Promise<MediaItemsResponse> => {
+    const { page, language } = mediaItemsRequest;
+    const url = `${tmdbConfig.baseURL}/movie/popular?page=${page}`;
+
+    return await mediaItemService.getMediaItemsResponse(url, language);
+};
+
+const getTopRatedMovies = async (mediaItemsRequest: MediaItemsRequest): Promise<MediaItemsResponse> => {
+    const { page, language } = mediaItemsRequest;
+    const url = `${tmdbConfig.baseURL}/movie/top_rated?page=${page}`;
+
+    return await mediaItemService.getMediaItemsResponse(url, language);
+};
+
+const getNowPlayingMovies = async (mediaItemsRequest: MediaItemsRequest): Promise<MediaItemsResponse> => {
+    const { page, language } = mediaItemsRequest;
+    const url = `${tmdbConfig.baseURL}/movie/now_playing?page=${page}`;
+
+    return await mediaItemService.getMediaItemsResponse(url, language);
+};
+
+const getUpcomingMovies = async (mediaItemsRequest: MediaItemsRequest): Promise<MediaItemsResponse> => {
+    const { page, language } = mediaItemsRequest;
+    const url = `${tmdbConfig.baseURL}/movie/upcoming?page=${page}`;
+
+    return await mediaItemService.getMediaItemsResponse(url, language);  
 };
 
 export default {
-    getTrendingMovies
+    getTrendingMovies, getPopularMovies, getTopRatedMovies, getNowPlayingMovies, getUpcomingMovies
 };
