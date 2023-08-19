@@ -1,7 +1,7 @@
 import { ErrorStatus, Language, MediaItemsRequest, TimeWindow } from '../../types';
 import { ParsingError } from '../errors';
-import { isLanguage, isTimeWindow } from '../typeguards';
-import { parseIntegerField, parseStringField } from './common';
+import { isTimeWindow } from '../typeguards';
+import { parseIntegerField, parseLanguageField, parseStringField } from './common';
 
 const defaultErrorStatus = ErrorStatus.BadRequest;
 
@@ -19,7 +19,7 @@ export const parseMediaItemsRequest = (body: unknown, pageUpperBound: number): M
     return {
         page: "page" in body ? parsePage(body.page, pageUpperBound) : defaultRequest.page,
         timeWindow: "timeWindow" in body ? parseTimeWindow(body.timeWindow) : defaultRequest.timeWindow,
-        language: "language" in body ? parseLanguage(body.language) : defaultRequest.language
+        language: "language" in body ? parseLanguageField(body.language, defaultErrorStatus) : defaultRequest.language
     };
 };
 
@@ -40,13 +40,4 @@ const parseTimeWindow = (timeWindow: unknown): TimeWindow => {
     }
 
     return tw;
-};
-
-const parseLanguage = (language: unknown): Language => {
-    const lang = parseStringField("language", language, defaultErrorStatus);
-    if (!isLanguage(lang)) {
-        throw new ParsingError("Field 'timeWindow' is not a valid Language", defaultErrorStatus);
-    }
-
-    return lang;
 };
