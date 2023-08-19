@@ -1,8 +1,11 @@
 import express, { Request, Response } from 'express';
 
 import movieService from '../services/movieService';
+import { ErrorStatus } from '../types';
 import routeBuilder from '../utils/builders/routeBuilder';
+import { parseIntegerRequestParam } from '../utils/parsers/common';
 import { parseGenresRequest } from '../utils/parsers/genresRequest';
+import { parseMediaItemsRequest } from '../utils/parsers/mediaItemsRequest';
 
 const router = express.Router();
 
@@ -17,6 +20,14 @@ router.get("/genres", async (req: Request, res: Response): Promise<Response> => 
     const genres = await movieService.getGenres(language);
 
     return res.json(genres);
+});
+
+router.get("/genres/:id", async (req: Request, res: Response): Promise<Response> => {
+    const mediaItemsRequest = parseMediaItemsRequest(req.body, 500);
+    const genreId = parseIntegerRequestParam("id", req.params.id, ErrorStatus.BadRequest);
+    const movies = await movieService.getMoviesByGenreId(genreId, mediaItemsRequest);
+    
+    return res.json(movies);
 });
 
 export default router;

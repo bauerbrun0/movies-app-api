@@ -3,7 +3,7 @@ import { ParsingError } from '../errors';
 import { isLanguage, isMediaType, isNumber, isString } from '../typeguards';
 
 export const parseNumberField = (fieldName: string, value: unknown, errorStatus: ErrorStatus): number => {
-    if (!value) {
+    if (value === null) {
         throw new ParsingError(`Field '${fieldName}' is null`, errorStatus);
     }
     
@@ -30,7 +30,7 @@ export const parseStringField = (fieldName: string, value: unknown, errorStatus:
     }
 
     if (!isString(value)) {
-        throw new ParsingError(`Field '${fieldName} is not a string`, errorStatus);
+        throw new ParsingError(`Field '${fieldName}' is not a string`, errorStatus);
     }
 
     return value;
@@ -38,7 +38,7 @@ export const parseStringField = (fieldName: string, value: unknown, errorStatus:
 
 export const parseMediaType = (mediaType: unknown, defaultMediaType: MediaType | null, errorStatus: ErrorStatus): MediaType => {
     if (!mediaType && !defaultMediaType) {
-        throw new ParsingError("Field 'mediaType' in null", errorStatus);
+        throw new ParsingError("Field 'mediaType' is null", errorStatus);
     }
 
     if (!mediaType && defaultMediaType) {
@@ -63,4 +63,14 @@ export const parseLanguageField = (language: unknown, errorStatus: ErrorStatus):
     }
 
     return lang;
+};
+
+export const parseIntegerRequestParam = (paramName: string, value: string, errorStatus: ErrorStatus): number => {
+    const num = Number.parseInt(value);
+
+    if (!Number.isInteger(num)) {
+        throw new ParsingError(`Request parameter '${paramName}' is not an integer`, errorStatus);
+    }
+
+    return num;
 };

@@ -8,13 +8,13 @@ import { parseGenresResponse } from '../utils/parsers/genresResponse';
 import { parseLogosResponse } from '../utils/parsers/logosResponse';
 import { parseTaglineResponse } from '../utils/parsers/taglineResponse';
 
-const getMediaItemsResponse = async (url: string, language: Language): Promise<MediaItemsResponse> => {
+const getMediaItemsResponse = async (url: string, language: Language, defaultMediaType: MediaType | null = null): Promise<MediaItemsResponse> => {
     const res = await axios.get(
         url + `&language=${language}`,
         tmdbConfig.requestConfig
     );
 
-    const baseMediaItemsResponse = parseBaseMediaItemsResponse(res.data);
+    const baseMediaItemsResponse = parseBaseMediaItemsResponse(res.data, defaultMediaType);
     const mediaItems = await completeMediaItems(baseMediaItemsResponse.mediaItems, language);
 
     return {

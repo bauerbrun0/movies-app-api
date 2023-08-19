@@ -54,10 +54,10 @@ const parseMediaItem = (mediaItem: unknown, defaultMediaType: MediaType | null):
         mediaType: parseMediaType(mediaType, defaultMediaType, defaultErrorStatus),
         title: parseStringField("title", title, defaultErrorStatus),
         releaseDate: parseStringField("releaseDate", releaseDate, defaultErrorStatus),
-        overview: parseStringField("overview", overview, defaultErrorStatus),
-        voteAverage: voteAverage ? parseNumberField("voteAverage", voteAverage, defaultErrorStatus) : null,
-        popularity: popularity ? parseNumberField("popularity", popularity, defaultErrorStatus) : null,
-        posterPath: parseStringField("posterPath", posterPath, defaultErrorStatus),
+        overview: overview ? parseStringField("overview", overview, defaultErrorStatus) : null,
+        voteAverage: voteAverage !== null ? parseNumberField("voteAverage", voteAverage, defaultErrorStatus) : null,
+        popularity: popularity !== null ? parseNumberField("popularity", popularity, defaultErrorStatus) : null,
+        posterPath: posterPath ? parseStringField("posterPath", posterPath, defaultErrorStatus) : null,
         backdropPath: backdropPath ? parseStringField("backdropPath", backdropPath, defaultErrorStatus) : null
     };
 };

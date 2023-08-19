@@ -21,10 +21,10 @@ export interface BaseMediaItem {
     id: number;
     title: string;
     releaseDate: string;
-    overview: string;
+    overview: string | null;
     voteAverage: number | null;
     popularity: number | null;
-    posterPath: string;
+    posterPath: string | null;
     backdropPath: string | null;
     mediaType: MediaType;
 }

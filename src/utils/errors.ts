@@ -15,3 +15,9 @@ export class ParsingError extends CustomError {
         super(message, "ParsingError", errorStatus);
     }
 }
+
+export class NotFoundError extends CustomError {
+    constructor(message: string) {
+        super(message, "NotFoundError", 404);
+    }
+}

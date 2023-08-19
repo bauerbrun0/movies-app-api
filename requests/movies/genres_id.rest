@@ -1,0 +1,40 @@
+### Success
+
+
+#### Without body
+http://localhost:3001/api/movies/genres/16
+
+#### With language
+http://localhost:3001/api/movies/genres/16
+Content-Type: application/json
+
+{
+    "language": "hu-HU"
+}
+
+#### With page
+http://localhost:3001/api/movies/genres/16
+Content-Type: application/json
+
+{
+    "page": 123
+}
+
+#### With language and page
+http://localhost:3001/api/movies/genres/16
+Content-Type: application/json
+
+{
+    "language": "hu-HU",
+    "page": 123
+}
+
+
+### Error
+
+
+#### with non existent genreId
+http://localhost:3001/api/movies/genres/1234321
+
+#### with incorrect genreId
+http://localhost:3001/api/movies/genres/string
